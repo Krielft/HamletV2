@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a38c00ba86c4f84a9c24b4a09938fd1, type: 3}
+  m_Name: Voyageur_1
+  m_EditorClassIdentifier: 
+  dialogue:
+  - Bien le bonjour.. voyageur ?
+  - "Je proviens des terres du nord, en H\xE9role ! J\u2019imagine que cette terre
+    vous appartient et.. j\u2019aimerai vous proposer mes services!"
+  - "Voyez-vous, je dispose d\u2019une grande quantit\xE9 de marchandises.. je pense
+    que votre petit hameau pourrait devenir un endroit de passage phare pour les
+    voyageurs \xE0 l\u2019avenir ! Alors, qu\u2019est ce que vous en dites..? \r\n"

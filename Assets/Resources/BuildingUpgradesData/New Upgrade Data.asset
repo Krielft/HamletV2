@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b77996e4e3b7145478f306ce22b2ae96, type: 3}
+  m_Name: New Upgrade Data
+  m_EditorClassIdentifier: 
+  coeffclickValue: 0
+  coeffSlots: 0
+  coeffAutoCollect: 0
+  dataClickValue1: {fileID: 0}
+  dataClickValue2: {fileID: 0}
+  dataAutoCollect1: {fileID: 0}
+  dataAutoCollect2: {fileID: 0}
+  dataSlots: {fileID: 11400000, guid: cbc1be3442700a84eac852211b6b0f08, type: 2}
+  baseCostClickValue: 0
+  baseCostAutoCollect: 0
+  baseCostSlots: 0
+  multiplierClickValue: 0
+  multiplierSlots: 0
+  multiplierAutoCollect: 0
