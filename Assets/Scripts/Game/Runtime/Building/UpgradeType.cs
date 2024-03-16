@@ -7,7 +7,8 @@ namespace Hamlet.Game.Runtime.Buildings
     {
         NmbrResourceClick,
         NmbrResourceAutoSec,
-        SlotsPNJs
+        SlotsPNJs,
+        tier
 
     }
 }

@@ -94,50 +94,99 @@ namespace Hamlet.Game.Runtime.Buildings
         private int lvlSlots;
 
 
-        public int lvlClickCap = 1;
+        private int lvlClickCap = 1;
         private int lvlAutoCap = 0;
         private int lvlSlotsCap = 0;
 
         private int tier = 1;
+        public void TriggerUpdateButton(string upgradeName)
+        {
+            switch (upgradeName)
+            {
+                case "Click":
+                    UpgradeLevel(UpgradeType.NmbrResourceClick);
+                    break;
+                case "Auto":
+                    UpgradeLevel(UpgradeType.NmbrResourceAutoSec); break;
+
+                case "Slots":
+                    UpgradeLevel(UpgradeType.SlotsPNJs); break;
+                case "Tier":
+                    UpgradeLevel(UpgradeType.tier);
+                    break;
+
+            }
+        }
         public void UpgradeLevel(UpgradeType type)
         {
             CheckCost(type);
             switch (type)
             {
                 case UpgradeType.NmbrResourceClick:
-                    if (
-                    Inventory.Instance.HasEnoughResources(UpgradeData.dataClickValue1, (costClickCollect * 12) / 10)
-                     && Inventory.Instance.HasEnoughResources(UpgradeData.dataClickValue2, costClickCollect))
+                    if (lvlClickCollect < lvlClickCap)
                     {
-                        Inventory.Instance.RemoveItem(UpgradeData.dataClickValue1, (costClickCollect * 12) / 10);
-                        Inventory.Instance.RemoveItem(UpgradeData.dataClickValue2, (costClickCollect));
-                        NmbrResourceClickvalue += UpgradeData.coeffclickValue;
-                        lvlClickCollect += 1;
+                        if (
+                                            Inventory.Instance.HasEnoughResources(UpgradeData.wood, (costClickCollect * 12) / 10)
+                                             && Inventory.Instance.HasEnoughResources(UpgradeData.stone, costClickCollect))
+                        {
+                            Inventory.Instance.RemoveItem(UpgradeData.wood, (costClickCollect * 12) / 10);
+                            Inventory.Instance.RemoveItem(UpgradeData.stone, (costClickCollect));
+                            lvlClickCollect += 1;
+                            NmbrResourceClickvalue += (NmbrResourceClickvalue * lvlClickCollect);
 
+                        }
                     }
+
                     break;
                 case UpgradeType.NmbrResourceAutoSec:
-                    if (
-                    Inventory.Instance.HasEnoughResources(UpgradeData.dataAutoCollect1, (costAutoCollect * 12) / 10)
-                    && Inventory.Instance.HasEnoughResources(UpgradeData.dataAutoCollect2, costAutoCollect))
+                    if (lvlAutoCollect < lvlAutoCap)
                     {
-                        Inventory.Instance.RemoveItem(UpgradeData.dataAutoCollect1, (costAutoCollect * 12) / 10);
-                        Inventory.Instance.RemoveItem(UpgradeData.dataAutoCollect2, (costAutoCollect));
-                        NmbrResourceAutoSecvalue += UpgradeData.coeffAutoCollect;
-                        lvlAutoCollect += 1;
+                        if (
+                    Inventory.Instance.HasEnoughResources(UpgradeData.wood, (costAutoCollect * 12) / 10)
+                    && Inventory.Instance.HasEnoughResources(UpgradeData.stone, costAutoCollect))
+                        {
+                            Inventory.Instance.RemoveItem(UpgradeData.wood, (costAutoCollect * 12) / 10);
+                            Inventory.Instance.RemoveItem(UpgradeData.stone, (costAutoCollect));
+                            lvlAutoCollect += 1;
+                            NmbrResourceAutoSecvalue += (NmbrResourceAutoSecvalue * lvlAutoCollect);
 
+                        }
                     }
+
+
 
                     break;
                 case UpgradeType.SlotsPNJs:
-                    if (Inventory.Instance.HasEnoughResources(UpgradeData.dataSlots, costSlots))
+
+                    if (lvlSlots < lvlSlotsCap)
+                        if (Inventory.Instance.HasEnoughResources(UpgradeData.gold, costSlots))
+                        {
+                            Inventory.Instance.RemoveItem(UpgradeData.gold, costSlots);
+                            lvlSlots += 1;
+                            SlotsPNJsvalue += 1;
+
+                        }
+
+                    break;
+                case UpgradeType.tier:
+                    if (lvlSlotsCap == lvlSlots && lvlClickCap == lvlClickCollect && lvlAutoCap == lvlAutoCollect && tier != 3)
                     {
-                        Inventory.Instance.RemoveItem(UpgradeData.dataSlots, costSlots);
-                        SlotsPNJsvalue += UpgradeData.coeffSlots;
-                        lvlSlots += 1;
 
+                        if (
+                            Inventory.Instance.HasEnoughResources(UpgradeData.wood, costTier) &&
+                            Inventory.Instance.HasEnoughResources(UpgradeData.stone, (int)(costTier * 0.8f)) &&
+                            Inventory.Instance.HasEnoughResources(UpgradeData.gold, (int)(costTier * 1.1f))
+                            )
+                        {
+                            Inventory.Instance.RemoveItem(UpgradeData.wood, costTier);
+                            Inventory.Instance.RemoveItem(UpgradeData.stone, (int)(costTier * 0.8f));
+                            Inventory.Instance.RemoveItem(UpgradeData.gold, (int)(costTier * 1.1f));
+                            tier += 1;
+                            lvlClickCap += 10;
+                            lvlAutoCap += 10;
+                            lvlSlotsCap += 5;
+                        }
                     }
-
                     break;
             }
         }
@@ -147,29 +196,28 @@ namespace Hamlet.Game.Runtime.Buildings
         private int costClickCollect;
         private int costAutoCollect;
         private int costSlots;
+        private int costTier;
         public void CheckCost(UpgradeType type)
         {
             switch (type)
             {
                 case UpgradeType.NmbrResourceClick:
-                    costClickCollect = UpgradeData.baseCostClickValue * UpgradeData.multiplierClickValue * (2 * lvlClickCollect);
+                    costClickCollect = (int)(UpgradeData.baseCostClickValue * UpgradeData.multiplierClickValue * (2 * lvlClickCollect));
                     break;
                 case UpgradeType.NmbrResourceAutoSec:
-                    costAutoCollect = UpgradeData.baseCostAutoCollect * UpgradeData.multiplierAutoCollect * (3 * lvlAutoCollect);
+                    costAutoCollect = (int)(UpgradeData.baseCostAutoCollect * UpgradeData.multiplierAutoCollect * (3 * lvlAutoCollect));
                     break;
                 case UpgradeType.SlotsPNJs:
-                    costSlots = UpgradeData.baseCostSlots * UpgradeData.multiplierSlots * (4 * lvlSlots);
+                    costSlots = (int)(UpgradeData.baseCostSlots * UpgradeData.multiplierSlots * (4 * lvlSlots));
+                    break;
+                case UpgradeType.tier:
+                    costTier = (int)(UpgradeData.baseCostTier * UpgradeData.multiplierTier * (3.5f * (lvlAutoCollect + lvlClickCollect + lvlSlots)));
                     break;
             }
         }
-        public void UpgradeTier()
-        {
 
-        }
 
-        /* public float GetMultiplierForResource(ResourceData resourceData)
-         {
-             throw new System.NotImplementedException();
-         }*/
+
+
     }
 }
