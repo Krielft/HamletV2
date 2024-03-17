@@ -23,6 +23,10 @@ public class MainMenu : MonoBehaviour
             Audio = 2
         }
 
+    [Header("Play Settings")] 
+        public GameObject cameraPrefab;
+        public GameObject menuCamera;
+
     public void OpenOptionPanel(int index)
     {
         if (oState == OptionState.None) //Open Option panel
@@ -69,6 +73,8 @@ public class MainMenu : MonoBehaviour
     {
         //Remove the Canvas of the Main Menu
         panel.SetActive(false);
+        menuCamera.SetActive(false);
+        cameraPrefab.SetActive(true);
     }
     
     public void Exit()
