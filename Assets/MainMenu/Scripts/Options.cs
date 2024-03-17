@@ -7,16 +7,21 @@ using UnityEngine.UI;
 
 public class Options : MonoBehaviour
 {
-    [Header("Options Variables")] 
+    [Header("Res Variables")] 
         public TMP_Dropdown resDropdown;
         public Toggle fullScreenToggle;
-
-        public AudioMixer[] audioMixers;
-        public Slider[] audioSliders;
-        
         public Resolution[] resolutions;
         public List<Resolution> filteredRes;
 
+    [Header("Audio Variables")] 
+        public AudioMixer[] audioMixers;
+        public Slider[] audioSliders;
+
+    [Header("Controls Variables")]
+        public Slider[] controlSliders;
+        public string[] controlNames;
+        public float[] controlDefaultValues;
+    
         private float currentRate;
         private int currentResIndex;
         private bool currentScreenState = true;
@@ -26,8 +31,12 @@ public class Options : MonoBehaviour
         SetupResolutions();
         for (int i = 0; i < 3; i++)
         {
+            //Audio
             audioMixers[i].SetFloat("MasterVolume",PlayerPrefs.GetFloat("Volume"+i, 0f));
             audioSliders[i].value = PlayerPrefs.GetFloat("Volume" + i, 0f);
+            
+            //Controls
+            controlSliders[i].value = PlayerPrefs.GetFloat(controlNames[i], controlDefaultValues[i]);
         }
     }
 
@@ -86,5 +95,13 @@ public class Options : MonoBehaviour
         //Set the game's global volume by the player's chosen amount
         audioMixers[index].SetFloat("MasterVolume", audioSliders[index].value);
         PlayerPrefs.SetFloat("Volume" + index, audioSliders[index].value);
+    }
+
+    public void UpdateControls()
+    {
+        for (int i=0; i < 3; i++)
+        {
+            PlayerPrefs.SetFloat(controlNames[i], controlSliders[i].value);
+        }
     }
 }
